@@ -11,20 +11,26 @@
  document.getElementById("songs").style.font = "italic bold 20px arial,serif";
  document.getElementById("playlists").style.font = "italic bold 20px arial,serif";
  
+ //sort songs by title
  sort();
+
+ //insert each song inside div tag
 for (let i = 0; i < player.songs.length; i++) 
 {
     const element = player.songs[i];
     let div = createSongElement(element);
-    div.style.border = "thick solid #0000FF";
-    document.getElementById("songs").appendChild(div);
+    div.style.border = "thick solid #0000FF"; //create border to each song
+    document.getElementById("songs").appendChild(div); 
 }
+//insert each playlist inside div tag
 for (let i = 0; i < player.playlists.length; i++) {
     const element = player.playlists[i];
     let div = createPlaylistElement(element);
     div.style.border = "thick solid #0000FF";
     document.getElementById("playlists").appendChild(div);   
 }
+
+//sort the songs bt title
 function sort(){
     player.songs.sort(function (a, b) {
         if (a.title < b.title){
@@ -34,10 +40,14 @@ function sort(){
         return 0;
     });
 }
+
+//
 function playS(song)
 {
     console.log(`Playing ${song.title} from ${song.album} by ${song.artist} | ${convertDuration(song.duration)}.`);
 }
+
+//play song by id
 function playSong(songId) {
     var wantedSong = player.songs.find(res => res.id == songId); //finds the song with the ID
     if(wantedSong===null){
@@ -47,6 +57,8 @@ function playSong(songId) {
     clear();
     document.getElementById(songId).style.backgroundColor = 'red';
 }
+
+//change all the songs background beside one to white
 function clear()
 {
     for (let i = 1; i <= player.songs.length; i++) 
@@ -54,9 +66,9 @@ function clear()
         document.getElementById(i).style.backgroundColor = 'white';
     }
 }
-/**
- * Creates a song DOM element based on a song object.
- */
+
+
+ //Creates a song DOM element based on a song object.
 function createSongElement({ id, title, album, artist, duration, coverArt }) {
 
     const children = [ title, album , artist , duration , coverArt];
@@ -65,15 +77,16 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
     return createElement("div", children, classes, attrs,id)
 }
 
-/**
- * Creates a playlist DOM element based on a playlist object.
- */
+
+ //Creates a playlist DOM element based on a playlist object.
 function createPlaylistElement({ id, name, songs }) {
     const children = [name , songs.length  ,"mintues : " + totaldurtion(songs)%60];
     const classes = []
     const attrs = {}
     return createElement1("div", children, classes, attrs,id)
 }
+
+//sum the songs total duration
 function totaldurtion(songs =  [])
 {
     let sum = 0 ;
@@ -96,6 +109,8 @@ function totaldurtion(songs =  [])
  * @param {Array} classes - the class list of the new element
  * @param {Object} attributes - the attributes for the new element
  */
+
+//creates element to playlists
  function createElement1(tagName, children = [], classes = [], attributes = {},id) {
     let tag = document.createElement(tagName);
     for (let i = 0; i < children.length; i++) {
@@ -113,8 +128,9 @@ function totaldurtion(songs =  [])
     }
 
     return tag;
-
  }
+
+ //creates element to songs
 function createElement(tagName, children = [], classes = [], attributes = {},id) {
     let tag = document.createElement(tagName);
     tag.setAttribute("id",id);
@@ -135,9 +151,7 @@ function createElement(tagName, children = [], classes = [], attributes = {},id)
                     p.innerHTML = convertDuration(children[i]);
                 tag.appendChild(p);
                     
-            }
-
-        
+            }   
     }
     classes.forEach(element => {
         tag.classlist.add(element);
@@ -150,6 +164,8 @@ function createElement(tagName, children = [], classes = [], attributes = {},id)
     return tag;
 
 }
+
+// convert duration to mm:ss format
 function convertDuration(duration)
     {
       let minutes=Math.floor(duration/60);
@@ -160,5 +176,3 @@ function convertDuration(duration)
         seconds="0"+seconds;
       return minutes+":"+seconds;
     }
-
-// You can write more code below this line
