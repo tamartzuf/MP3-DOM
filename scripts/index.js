@@ -92,16 +92,7 @@ function totaldurtion(songs =  [])
 
  //Creates a song DOM element based on a song object.
 function createSongElement({ id, title, album, artist, duration, coverArt }) {
-/*const artistEl = createElement("span", [artist]);
-  
-  const durationEl = createElement("span", ["" + duration] ,["duration", "short-duration"], {onclick: `console.log('${duration}')`});
 
-  const coverImageArtUrl = "https://townsquare.media/site/295/files/2015/09/Razors-Edge.jpg";
-  const imgEl = createElement("img", [] ,["album-art"], {src: coverImageArtUrl});
-
-  return createElement("div", ["Artist: ", artistEl, "Duration: ", durationEl, imgEl]);
-}
-*/
     const children = [ title, album , artist , duration , coverArt];
     const classes = []
     const attrs = { onclick: `playSong(${id})`}
@@ -133,47 +124,29 @@ function createPlaylistElement({ id, name, songs }) {
 
 //creates element to playlists
  function createElement1(tagName, children = [], classes = [], attributes = {},id) {
-     /*
-    const el = document.createElement(tagName);
+    let tag = document.createElement(tagName);
     
     // Children
     for(const child of children) {
-      el.append(child);
-    }
-  
-    // Classes
-    for(const cls of classes) {
-      el.classList.add(cls);
-    }
-  
-    // Attributes
-    for (const attr in attributes) {
-      el.setAttribute(attr, attributes[attr]);
-    }
-  
-    return el;
-  }
-   */
-   
-    let tag = document.createElement(tagName);
-    for (let i = 0; i < children.length; i++) {
-        const element = children[i];
         let p  = document.createElement("p");
-        p.innerHTML = children[i];
-        tag.appendChild(p);
+        p.textContent = child;
+        tag.append(p); 
     }
+
+    //class
     classes.forEach(element => {
         tag.classlist.add(element);
-    });
+        });
 
+    //attributes
     for (const att in attributes) {
         tag.setAttribute(att, attributes[att]);   
-    }
+        }
 
     return tag;
- }
+    }
 
- //creates element 
+ //creates element to song
 function createElement(tagName, children = [], classes = [], attributes = {},id) {
     let tag = document.createElement(tagName);
     tag.setAttribute("id",id);
@@ -189,9 +162,9 @@ function createElement(tagName, children = [], classes = [], attributes = {},id)
             {
                 let p  = document.createElement("p");
                 if(typeof children[i] === 'string')
-                    p.innerHTML = children[i];
+                    p.textContent = children[i];
                 else
-                    p.innerHTML = convertDuration(children[i]);
+                    p.textContent = convertDuration(children[i]);
                 tag.appendChild(p);
                     
             }   
@@ -207,5 +180,3 @@ function createElement(tagName, children = [], classes = [], attributes = {},id)
     return tag;
 
 }
-
-
