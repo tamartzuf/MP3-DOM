@@ -5,11 +5,13 @@
  * @param {String} songId - the ID of the song to play
  */
 
-//document style
+/*document style
  document.getElementById("songs").style.textAlign = "center";
  document.getElementById("playlists").style.textAlign = "center";
  document.getElementById("songs").style.font = "italic bold 20px arial,serif";
  document.getElementById("playlists").style.font = "italic bold 20px arial,serif";
+ */
+
  
  // convert duration to mm:ss format
 function convertDuration(duration)

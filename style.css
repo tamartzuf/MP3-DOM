@@ -1,1 +1,20 @@
 /* Your code here */
+div {
+    background-color: lightgrey;
+    width: 200px;
+    border: 15px solid rebeccapurple;
+    padding: 40px;
+    margin: 20px;
+    text-align: center;
+    align-items: center;
+    margin: auto;
+    font-size: 25px;
+    font-family: Fantasy;
+
+  }
+  body {
+    align-items: center;
+    justify-content: center;
+    background: lightblue url("https://www.nme.com/wp-content/uploads/2020/06/Festival-UK.jpg") no-repeat fixed center;
+  }
+ 
