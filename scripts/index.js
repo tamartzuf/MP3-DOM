@@ -11,26 +11,18 @@
  document.getElementById("songs").style.font = "italic bold 20px arial,serif";
  document.getElementById("playlists").style.font = "italic bold 20px arial,serif";
  
- //sort songs by title
- sort();
-
- //insert each song inside div tag
-for (let i = 0; i < player.songs.length; i++) 
+ // convert duration to mm:ss format
+function convertDuration(duration)
 {
-    const element = player.songs[i];
-    let div = createSongElement(element);
-    div.style.border = "thick solid #0000FF"; //create border to each song
-    document.getElementById("songs").appendChild(div); 
+  let minutes=Math.floor(duration/60);
+  let seconds=duration%60;
+  if(minutes<10)
+    minutes="0"+minutes;
+  if(seconds<10)
+    seconds="0"+seconds;
+  return minutes+":"+seconds;
 }
-//insert each playlist inside div tag
-for (let i = 0; i < player.playlists.length; i++) {
-    const element = player.playlists[i];
-    let div = createPlaylistElement(element);
-    div.style.border = "thick solid #0000FF";
-    document.getElementById("playlists").appendChild(div);   
-}
-
-//sort the songs bt title
+//sort the songs by title
 function sort(){
     player.songs.sort(function (a, b) {
         if (a.title < b.title){
@@ -40,8 +32,27 @@ function sort(){
         return 0;
     });
 }
+ 
+ sort();
 
-//
+ //insert each playlist element inside div tag
+player.songs.forEach(song=>{
+    const songEl = song;
+    let div = createSongElement(songEl);
+    div.style.border = "thick solid #0000FF"; //create border to each song
+    document.getElementById("songs").appendChild(div);  
+});
+
+//insert each playlist element inside div tag
+player.playlists.forEach(playlist=>{
+    const playlistEl = playlist;
+    let div = createPlaylistElement(playlistEl);
+    div.style.border = "thick solid #0000FF"; //create border to each playlist
+    document.getElementById("playlists").appendChild(div);  
+});
+
+
+//play song
 function playS(song)
 {
     console.log(`Playing ${song.title} from ${song.album} by ${song.artist} | ${convertDuration(song.duration)}.`);
@@ -67,10 +78,30 @@ function clear()
     }
 }
 
+//sum the songs total duration
+function totaldurtion(songs =  [])
+{
+    let sum = 0 ;
+    for (let i = 0; i < songs.length; i++) {
+        const element = songs[i];
+        var wantedSong = player.songs.find(res => res.id == element);
+        sum += wantedSong.duration;
+    }
+    return sum;
+}
 
  //Creates a song DOM element based on a song object.
 function createSongElement({ id, title, album, artist, duration, coverArt }) {
+/*const artistEl = createElement("span", [artist]);
+  
+  const durationEl = createElement("span", ["" + duration] ,["duration", "short-duration"], {onclick: `console.log('${duration}')`});
 
+  const coverImageArtUrl = "https://townsquare.media/site/295/files/2015/09/Razors-Edge.jpg";
+  const imgEl = createElement("img", [] ,["album-art"], {src: coverImageArtUrl});
+
+  return createElement("div", ["Artist: ", artistEl, "Duration: ", durationEl, imgEl]);
+}
+*/
     const children = [ title, album , artist , duration , coverArt];
     const classes = []
     const attrs = { onclick: `playSong(${id})`}
@@ -86,17 +117,7 @@ function createPlaylistElement({ id, name, songs }) {
     return createElement1("div", children, classes, attrs,id)
 }
 
-//sum the songs total duration
-function totaldurtion(songs =  [])
-{
-    let sum = 0 ;
-    for (let i = 0; i < songs.length; i++) {
-        const element = songs[i];
-        var wantedSong = player.songs.find(res => res.id == element);
-        sum += wantedSong.duration;
-    }
-    return sum;
-}
+
 /**
  * Creates a new DOM element.
  *
@@ -112,6 +133,28 @@ function totaldurtion(songs =  [])
 
 //creates element to playlists
  function createElement1(tagName, children = [], classes = [], attributes = {},id) {
+     /*
+    const el = document.createElement(tagName);
+    
+    // Children
+    for(const child of children) {
+      el.append(child);
+    }
+  
+    // Classes
+    for(const cls of classes) {
+      el.classList.add(cls);
+    }
+  
+    // Attributes
+    for (const attr in attributes) {
+      el.setAttribute(attr, attributes[attr]);
+    }
+  
+    return el;
+  }
+   */
+   
     let tag = document.createElement(tagName);
     for (let i = 0; i < children.length; i++) {
         const element = children[i];
@@ -130,7 +173,7 @@ function totaldurtion(songs =  [])
     return tag;
  }
 
- //creates element to songs
+ //creates element 
 function createElement(tagName, children = [], classes = [], attributes = {},id) {
     let tag = document.createElement(tagName);
     tag.setAttribute("id",id);
@@ -165,14 +208,4 @@ function createElement(tagName, children = [], classes = [], attributes = {},id)
 
 }
 
-// convert duration to mm:ss format
-function convertDuration(duration)
-    {
-      let minutes=Math.floor(duration/60);
-      let seconds=duration%60;
-      if(minutes<10)
-        minutes="0"+minutes;
-      if(seconds<10)
-        seconds="0"+seconds;
-      return minutes+":"+seconds;
-    }
+
