@@ -1,17 +1,19 @@
 /* Your code here */
-/*
+main{
+  background-color: white;
+}
 div {
     background-color: lightgrey;
-    width: 200px;
-    border: 15px solid rebeccapurple;
-    padding: 40px;
+    width: 170px;
+    border: 15px solid rgba(36, 4, 66, 0.952);
+    padding: 30px;
     margin: 20px;
     text-align: center;
     align-items: center;
     margin: auto;
     font-size: 25px;
     font-family: Fantasy;
-*/
+
   }
   body {
     align-items: center;
